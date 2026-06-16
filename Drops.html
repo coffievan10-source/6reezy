@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>6reezy — Drops</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@900&family=Share+Tech+Mono&display=swap');
+
+    :root {
+      --black: #0A0A0A;
+      --off-white: #F0EDEB;
+      --red: #C41E1E;
+      --green: #2D3B2A;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--red);
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 32px;
+      background: var(--black);
+    }
+
+    .nav-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 28px;
+      color: var(--off-white);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      color: var(--off-white);
+      text-decoration: none;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--red);
+    }
+
+    /* TICKER */
+    .ticker {
+      overflow: hidden;
+      background: var(--red);
+      color: var(--black);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      padding: 6px 0;
+      margin-top: 64px;
+    }
+
+    .ticker-inner {
+      display: inline-flex;
+      animation: ticker 18s linear infinite;
+      white-space: nowrap;
+    }
+
+    .ticker-inner span {
+      padding: 0 40px;
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* HERO DROP */
+    .drop-hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 32px 60px;
+      position: relative;
+      border-bottom: 1px solid #1a1a1a;
+      overflow: hidden;
+    }
+
+    .drop-hero::before {
+      content: '003';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(200px, 40vw, 500px);
+      color: transparent;
+      -webkit-text-stroke: 1px #1a1a1a;
+      pointer-events: none;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .drop-hero-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 16px;
+    }
+
+    .drop-hero h1 {
+      font-size: clamp(80px, 16vw, 220px);
+      text-transform: uppercase;
+      line-height: 0.88;
+      color: var(--off-white);
+    }
+
+    .drop-hero h1 span.outline {
+      color: transparent;
+      -webkit-text-stroke: 2px var(--off-white);
+    }
+
+    .drop-hero-meta {
+      display: flex;
+      gap: 48px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .meta-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .meta-label {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--off-white);
+      opacity: 0.4;
+    }
+
+    .meta-value {
+      font-size: 14px;
+      color: var(--off-white);
+      letter-spacing: 0.05em;
+    }
+
+    /* COUNTDOWN */
+    .countdown-section {
+      padding: 60px 32px;
+      border-bottom: 1px solid #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 32px;
+    }
+
+    .countdown-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--off-white);
+      opacity: 0.4;
+      margin-bottom: 12px;
+    }
+
+    .countdown-timer {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .time-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .time-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(60px, 10vw, 100px);
+      color: var(--off-white);
+      line-height: 1;
+    }
+
+    .time-unit {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-top: 4px;
+    }
+
+    .time-sep {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 80px;
+      color: var(--red);
+      line-height: 1;
+      margin-bottom: 14px;
+    }
+
+    .notify-btn {
+      background: var(--red);
+      border: none;
+      color: var(--black);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 18px 40px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .notify-btn:hover {
+      opacity: 0.8;
+    }
+
+    /* PRODUITS DU DROP */
+    .drop-products-section {
+      padding: 80px 32px 0;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 32px;
+    }
+
+    .section-title {
+      font-size: clamp(40px, 6vw, 80px);
+      text-transform: uppercase;
+      line-height: 0.88;
+      color: var(--off-white);
+    }
+
+    .section-count {
+      font-size: 12px;
+      color: var(--red);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2px;
+    }
+
+    .product-card {
+      overflow: hidden;
+      position: relative;
+      background: #0f0f0f;
+      cursor: pointer;
+    }
+
+    .product-img-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1e1e1e;
+      font-size: 64px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      transition: transform 0.4s;
+    }
+
+    .product-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s;
+    }
+
+    .product-card:hover .product-img,
+    .product-card:hover .product-img-placeholder {
+      transform: scale(1.04);
+    }
+
+    .drop-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--red);
+      color: var(--black);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 4px 8px;
+    }
+
+    .new-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--off-white);
+      color: var(--black);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 4px 8px;
+    }
+
+    .product-info {
+      padding: 16px;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .product-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 22px;
+      text-transform: uppercase;
+      color: var(--off-white);
+      line-height: 1;
+    }
+
+    .product-sub {
+      font-size: 11px;
+      color: var(--red);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .product-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+    }
+
+    .product-price {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 26px;
+      color: var(--off-white);
+    }
+
+    .product-cta {
+      background: none;
+      border: 1px solid var(--off-white);
+      color: var(--off-white);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 8px 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .product-cta:hover {
+      background: var(--off-white);
+      color: var(--black);
+    }
+
+    /* DROPS ARCHIVE */
+    .archive-section {
+      padding: 100px 32px 0;
+    }
+
+    .archive-list {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .archive-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 0;
+      border-top: 1px solid #1a1a1a;
+      text-decoration: none;
+      transition: padding-left 0.3s;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .archive-item:last-child {
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .archive-item:hover {
+      padding-left: 12px;
+    }
+
+    .archive-drop-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(32px, 5vw, 60px);
+      text-transform: uppercase;
+      color: var(--off-white);
+      line-height: 1;
+    }
+
+    .archive-drop-name span {
+      color: transparent;
+      -webkit-text-stroke: 1px var(--off-white);
+    }
+
+    .archive-meta {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .archive-date {
+      font-size: 12px;
+      color: var(--off-white);
+      opacity: 0.4;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .archive-status {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border: 1px solid;
+    }
+
+    .archive-status.sold {
+      color: #333;
+      border-color: #222;
+    }
+
+    .archive-status.live {
+      color: var(--red);
+      border-color: var(--red);
+    }
+
+    /* FOOTER */
+    footer {
+      margin-top: 100px;
+      border-top: 1px solid #1a1a1a;
+      padding: 40px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    footer p {
+      font-size: 11px;
+      color: var(--off-white);
+      opacity: 0.3;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="6reezy.html" class="nav-logo">6reezy</a>
+    <ul class="nav-links">
+      <li><a href="Catalogue.html">Catalogue</a></li>
+      <li><a href="Drops.html">Drops</a></li>
+    </ul>
+  </nav>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-inner">
+      <span>6reezy RULES BABI • DROP 003 +</span>
+      <span>6reezy RULES BABI • DROP 003 +</span>
+      <span>6reezy RULES BABI • DROP 003 +</span>
+      <span>6reezy RULES BABI • DROP 003 +</span>
+    </div>
+  </div>
+
+  <!-- HERO DROP 003 -->
+  <div class="drop-hero">
+    <div class="drop-hero-label">// Dernier drop</div>
+    <h1>Drop<br><span class="outline">003</span></h1>
+    <div class="drop-hero-meta">
+      <div class="meta-block">
+        <span class="meta-label">Saison</span>
+        <span class="meta-value">2026</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">Pièces</span>
+        <span class="meta-value">3 références</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">Statut</span>
+        <span class="meta-value" style="color: var(--red);">En ligne</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- COUNTDOWN -->
+  <div class="countdown-section">
+    <div>
+      <div class="countdown-label">// Temps restant</div>
+      <div class="countdown-timer">
+        <div class="time-block">
+          <span class="time-num" id="t-h">00</span>
+          <span class="time-unit">Heures</span>
+        </div>
+        <span class="time-sep">:</span>
+        <div class="time-block">
+          <span class="time-num" id="t-m">00</span>
+          <span class="time-unit">Minutes</span>
+        </div>
+        <span class="time-sep">:</span>
+        <div class="time-block">
+          <span class="time-num" id="t-s">00</span>
+          <span class="time-unit">Secondes</span>
+        </div>
+      </div>
+    </div>
+    <button class="notify-btn" onclick="handleNotify(this)">Me notifier</button>
+  </div>
+
+  <!-- PRODUITS DROP 003 -->
+  <div class="drop-products-section">
+    <div class="section-header">
+      <h2 class="section-title">Les<br>pièces</h2>
+      <span class="section-count">03 refs</span>
+    </div>
+
+    <div class="products-grid">
+
+      <div class="product-card">
+        <div class="product-img-placeholder">6Z</div>
+        <span class="drop-badge">Drop 003</span>
+        <span class="new-badge">New</span>
+        <div class="product-info">
+          <div class="product-name">Tee #003</div>
+          <div class="product-sub">100% Coton — S / M / L / XL</div>
+          <div class="product-bottom">
+            <span class="product-price">20000FCFA</span>
+            <a class="product-cta" href="#">Acheter</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img-placeholder">6Z</div>
+        <span class="drop-badge">Drop 003</span>
+        <span class="new-badge">New</span>
+        <div class="product-info">
+          <div class="product-name">Hoodie #003</div>
+          <div class="product-sub">380g Fleece — S / M / L / XL</div>
+          <div class="product-bottom">
+            <span class="product-price">20000FCFA</span>
+            <a class="product-cta" href="#">Acheter</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img-placeholder">6Z</div>
+        <span class="drop-badge">Drop 003</span>
+        <span class="new-badge">New</span>
+        <div class="product-info">
+          <div class="product-name">Cap #003</div>
+          <div class="product-sub">6 panel — Taille unique</div>
+          <div class="product-bottom">
+            <span class="product-price">20000FCFA</span>
+            <a class="product-cta" href="#">Acheter</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ARCHIVE DES DROPS -->
+  <div class="archive-section">
+    <div class="section-header">
+      <h2 class="section-title">Archive<br><span style="color:transparent;-webkit-text-stroke:2px var(--off-white)">Drops</span></h2>
+    </div>
+
+    <div class="archive-list">
+
+      <a class="archive-item" href="#">
+        <div class="archive-drop-name">Drop <span>003</span></div>
+        <div class="archive-meta">
+          <span class="archive-date">2025</span>
+          <span class="archive-status live">En ligne</span>
+        </div>
+      </a>
+
+      <a class="archive-item" href="#">
+        <div class="archive-drop-name">Drop <span>002</span></div>
+        <div class="archive-meta">
+          <span class="archive-date">2024</span>
+          <span class="archive-status sold">Sold Out</span>
+        </div>
+      </a>
+
+      <a class="archive-item" href="#">
+        <div class="archive-drop-name">Drop <span>001</span></div>
+        <div class="archive-meta">
+          <span class="archive-date">2024</span>
+          <span class="archive-status sold">Sold Out</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 6reezy 2025 — Tous droits réservés</p>
+    <p>6reezy Rules The World</p>
+  </footer>
+
+  <script>
+    // Countdown — cible dans 18h depuis le chargement (même logique que 6reezy.html)
+    const target = new Date(Date.now() + 18 * 3600 * 1000);
+
+    function tick() {
+      const diff = target - Date.now();
+      if (diff <= 0) {
+        document.getElementById('t-h').textContent = '00';
+        document.getElementById('t-m').textContent = '00';
+        document.getElementById('t-s').textContent = '00';
+        return;
+      }
+      const h = Math.floor(diff / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      document.getElementById('t-h').textContent = String(h).padStart(2, '0');
+      document.getElementById('t-m').textContent = String(m).padStart(2, '0');
+      document.getElementById('t-s').textContent = String(s).padStart(2, '0');
+    }
+
+    tick();
+    setInterval(tick, 1000);
+
+    function handleNotify(btn) {
+      btn.textContent = 'Noté ✓';
+      btn.style.background = 'var(--green)';
+      btn.disabled = true;
+    }
+  </script>
+
+</body>
+</html>
