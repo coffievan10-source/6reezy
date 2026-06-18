@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>6reezy — Lookbook</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@900&family=Share+Tech+Mono&display=swap');
+
+    :root {
+      --black: #0A0A0A;
+      --off-white: #F0EDEB;
+      --red: #C41E1E;
+      --green: #2D3B2A;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--black);
+      color: var(--red);
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 32px;
+      background: var(--black);
+    }
+
+    .nav-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 28px;
+      color: var(--off-white);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      color: var(--off-white);
+      text-decoration: none;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--red); }
+
+    /* TICKER */
+    .ticker {
+      overflow: hidden;
+      background: var(--red);
+      color: var(--black);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      padding: 6px 0;
+      margin-top: 64px;
+    }
+
+    .ticker-inner {
+      display: inline-flex;
+      animation: ticker 18s linear infinite;
+      white-space: nowrap;
+    }
+
+    .ticker-inner span { padding: 0 40px; }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* HERO */
+    .lb-hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 32px 60px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .lb-hero::before {
+      content: 'LB';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(200px, 45vw, 600px);
+      color: transparent;
+      -webkit-text-stroke: 1px #1a1a1a;
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+    }
+
+    .lb-hero-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 16px;
+    }
+
+    .lb-hero h1 {
+      font-size: clamp(80px, 16vw, 220px);
+      text-transform: uppercase;
+      line-height: 0.88;
+      color: var(--off-white);
+    }
+
+    .lb-hero h1 span.outline {
+      color: transparent;
+      -webkit-text-stroke: 2px var(--off-white);
+    }
+
+    .lb-hero-sub {
+      margin-top: 24px;
+      font-size: 12px;
+      color: var(--off-white);
+      opacity: 0.4;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* DROP SELECTOR */
+    .drop-selector {
+      display: flex;
+      gap: 2px;
+      padding: 0 32px;
+      margin-top: 2px;
+    }
+
+    .drop-tab {
+      flex: 1;
+      padding: 20px;
+      background: #0f0f0f;
+      border: none;
+      color: var(--off-white);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+      opacity: 0.4;
+    }
+
+    .drop-tab:hover { opacity: 0.7; }
+
+    .drop-tab.active {
+      background: var(--red);
+      color: var(--black);
+      opacity: 1;
+    }
+
+    /* LOOKBOOK GRID — layout éditorial */
+    .lb-section {
+      display: none;
+      padding: 2px;
+    }
+
+    .lb-section.active { display: block; }
+
+    /* Layout masonry-like fixe */
+    .lb-grid {
+      display: grid;
+      gap: 2px;
+    }
+
+    /* Ligne type A : grande image gauche + 2 petites droite */
+    .lb-row-a {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2px;
+    }
+
+    .lb-row-a-right {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 2px;
+    }
+
+    /* Ligne type B : 3 colonnes égales */
+    .lb-row-b {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px;
+    }
+
+    /* Ligne type C : petite gauche + grande droite */
+    .lb-row-c {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 2px;
+    }
+
+    /* Ligne type D : pleine largeur */
+    .lb-row-d {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    /* Cellule photo */
+    .lb-cell {
+      position: relative;
+      overflow: hidden;
+      background: #111;
+      cursor: pointer;
+    }
+
+    .lb-cell .placeholder {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 48px;
+      color: #1e1e1e;
+      transition: transform 0.5s;
+    }
+
+    .lb-cell.tall .placeholder   { height: 700px; }
+    .lb-cell.medium .placeholder { height: 400px; }
+    .lb-cell.short .placeholder  { height: 340px; }
+    .lb-cell.wide .placeholder   { height: 600px; }
+    .lb-cell.full .placeholder   { height: 80vh; }
+
+    .lb-cell img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s;
+    }
+
+    .lb-cell:hover .placeholder,
+    .lb-cell:hover img {
+      transform: scale(1.03);
+    }
+
+    /* Overlay au hover */
+    .lb-cell-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,10,10,0.6);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .lb-cell:hover .lb-cell-overlay { opacity: 1; }
+
+    .overlay-drop {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+
+    .overlay-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 24px;
+      text-transform: uppercase;
+      color: var(--off-white);
+      line-height: 1;
+      margin-top: 4px;
+    }
+
+    /* TEXTE ÉDITORIAL intercalé */
+    .lb-editorial {
+      padding: 80px 32px;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .editorial-title {
+      font-size: clamp(50px, 7vw, 100px);
+      text-transform: uppercase;
+      line-height: 0.88;
+      color: var(--off-white);
+    }
+
+    .editorial-title span {
+      color: transparent;
+      -webkit-text-stroke: 2px var(--off-white);
+    }
+
+    .editorial-body {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .editorial-body p {
+      font-size: 13px;
+      color: var(--off-white);
+      opacity: 0.6;
+      line-height: 1.8;
+      letter-spacing: 0.03em;
+    }
+
+    .editorial-body .drop-ref {
+      font-size: 11px;
+      color: var(--red);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    /* LIGHTBOX */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,10,10,0.96);
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox-img {
+      max-width: 80vw;
+      max-height: 85vh;
+      object-fit: contain;
+    }
+
+    .lightbox-placeholder {
+      width: 60vw;
+      height: 80vh;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 120px;
+      font-weight: 900;
+      color: #1e1e1e;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 32px;
+      right: 32px;
+      background: none;
+      border: 1px solid var(--off-white);
+      color: var(--off-white);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .lightbox-close:hover {
+      background: var(--off-white);
+      color: var(--black);
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--off-white);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 48px;
+      font-weight: 900;
+      cursor: pointer;
+      padding: 20px;
+      opacity: 0.4;
+      transition: opacity 0.2s;
+    }
+
+    .lightbox-nav:hover { opacity: 1; }
+    .lightbox-nav.prev { left: 16px; }
+    .lightbox-nav.next { right: 16px; }
+
+    .lightbox-counter {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      color: var(--off-white);
+      opacity: 0.4;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    /* FOOTER */
+    footer {
+      margin-top: 100px;
+      border-top: 1px solid #1a1a1a;
+      padding: 40px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    footer p {
+      font-size: 11px;
+      color: var(--off-white);
+      opacity: 0.3;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    @media (max-width: 768px) {
+      .lb-row-a, .lb-row-b, .lb-row-c {
+        grid-template-columns: 1fr;
+      }
+      .lb-row-a-right {
+        grid-template-rows: auto;
+        grid-template-columns: 1fr 1fr;
+      }
+      .lb-editorial {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .drop-selector { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <button class="lightbox-close" onclick="closeLightbox()">Fermer ×</button>
+    <button class="lightbox-nav prev" onclick="lbNav(-1)">‹</button>
+    <div class="lightbox-placeholder" id="lb-content">6Z</div>
+    <button class="lightbox-nav next" onclick="lbNav(1)">›</button>
+    <div class="lightbox-counter" id="lb-counter">1 / 6</div>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="6reezy.html" class="nav-logo">6reezy</a>
+    <ul class="nav-links">
+      <li><a href="catalogue.html">Catalogue</a></li>
+      <li><a href="Drops.html">Drops</a></li>
+    </ul>
+  </nav>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-inner">
+      <span>6reezy RULES BABI • DROP 003 +</span>
+      <span>6reezy RULES BABI • DROP 003 +</span>
+      <span>6reezy RULES BABI • DROP 003 +</span>
+      <span>6reezy RULES BABI • DROP 003 +</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="lb-hero">
+    <div class="lb-hero-label">// Visual identity</div>
+    <h1>Look<br><span class="outline">book</span></h1>
+    <p class="lb-hero-sub">Drops 001 — 003 · 2025–2026</p>
+  </div>
+
+  <!-- DROP TABS -->
+  <div class="drop-selector">
+    <button class="drop-tab active" onclick="showDrop('003', this)">Drop 003</button>
+    <button class="drop-tab" onclick="showDrop('002', this)">Drop 002</button>
+    <button class="drop-tab" onclick="showDrop('001', this)">Drop 001</button>
+  </div>
+
+  <!-- ═══════════════ DROP 003 ═══════════════ -->
+  <div class="lb-section active" id="drop-003">
+
+    <!-- Ligne A : grande + 2 petites -->
+    <div class="lb-grid">
+      <div class="lb-row-a">
+        <div class="lb-cell tall" onclick="openLightbox(0, '003')">
+          <div class="placeholder">6Z</div>
+          <div class="lb-cell-overlay">
+            <span class="overlay-drop">Drop 003</span>
+            <span class="overlay-title">Hoodie #003</span>
+          </div>
+        </div>
+        <div class="lb-row-a-right">
+          <div class="lb-cell short" onclick="openLightbox(1, '003')">
+            <div class="placeholder">6Z</div>
+            <div class="lb-cell-overlay">
+              <span class="overlay-drop">Drop 003</span>
+              <span class="overlay-title">Tee #003</span>
+            </div>
+          </div>
+          <div class="lb-cell short" onclick="openLightbox(2, '003')">
+            <div class="placeholder">6Z</div>
+            <div class="lb-cell-overlay">
+              <span class="overlay-drop">Drop 003</span>
+              <span class="overlay-title">Cap #003</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Texte éditorial -->
+    <div class="lb-editorial">
+      <div class="editorial-title">Drop<br><span>003</span><br>2025</div>
+      <div class="editorial-body">
+        <span class="drop-ref">// Drop 003 — 2025</span>
+        <p>Le troisième chapitre de 6reezy. Trois pièces. Zéro compromis. Une esthétique qui s'assume, une construction qui dure.</p>
+        <p>Chaque silhouette a été pensée pour vivre dans la rue, pas sur un cintre. Le drop 003 c'est la continuité d'une vision — plus affûtée, plus radicale.</p>
+      </div>
+    </div>
+
+    <!-- Ligne B : 3 colonnes -->
+    <div class="lb-grid">
+      <div class="lb-row-b">
+        <div class="lb-cell medium" onclick="openLightbox(3, '003')">
+          <div class="placeholder">6Z</div>
+          <div class="lb-cell-overlay">
+            <span class="overlay-drop">Drop 003</span>
+            <span class="overlay-title">Détail #01</span>
+          </div>
+        </div>
+        <div class="lb-cell medium" onclick="openLightbox(4, '003')">
+          <div class="placeholder">6Z</div>
+          <div class="lb-cell-overlay">
+            <span class="overlay-drop">Drop 003</span>
+            <span class="overlay-title">Détail #02</span>
+          </div>
+        </div>
+        <div class="lb-cell medium" onclick="openLightbox(5, '003')">
+          <div class="placeholder">6Z</div>
+          <div class="lb-cell-overlay">
+            <span class="overlay-drop">Drop 003</span>
+            <span class="overlay-title">Détail #03</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pleine largeur -->
+    <div class="lb-grid" style="margin-top:2px;">
+      <div class="lb-row-d">
+        <div class="lb-cell full" onclick="openLightbox(6, '003')">
+          <div class="placeholder">6Z</div>
+          <div class="lb-cell-overlay">
+            <span class="overlay-drop">Drop 003</span>
+            <span class="overlay-title">Campaign Shot</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ligne C -->
+    <div class="lb-grid" style="margin-top:2px;">
+      <div class="lb-row-c">
+        <div class="lb-cell medium" onclick="openLightbox(7, '003')">
+          <div class="placeholder">6Z</div>
+          <div class="lb-cell-overlay">
+            <span class="overlay-drop">Drop 003</span>
+            <span class="overlay-title">Portrait #01</span>
+          </div>
+        </div>
+        <div class="lb-cell medium" onclick="openLightbox(8, '003')">
+          <div class="placeholder">6Z</div>
+          <div class="lb-cell-overlay">
+            <span class="overlay-drop">Drop 003</span>
+            <span class="overlay-title">Portrait #02</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════ DROP 002 ═══════════════ -->
+  <div class="lb-section" id="drop-002">
+
+    <div class="lb-grid">
+      <div class="lb-row-b">
+        <div class="lb-cell tall" onclick="openLightbox(0, '002')">
+          <div class="placeholder">6Z</div>
+          <div class="lb-cell-overlay">
+            <span class="overlay-drop">Drop 002</span>
+            <span class="overlay-title">Tee #002</span>
+          </div>
+        </div>
+        <div class="lb-cell tall" onclick="openLightbox(1, '002')">
+          <div class="placeholder">6Z</div>
+          <div class="lb-cell-overlay">
+            <span class="overlay-drop">Drop 002</span>
+            <span class="overlay-title">Longsleeve #002</span>
+          </div>
+        </div>
+        <div class="lb-cell tall" onclick="openLightbox(2, '002')">
+          <div class="placeholder">6Z</div>
+          <div class="lb-cell-overlay">
+            <span class="overlay-drop">Drop 002</span>
+            <span class="overlay-title">Campaign Shot</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lb-editorial">
+      <div class="editorial-title">Drop<br><span>002</span><br>2024</div>
+      <div class="editorial-body">
+        <span class="drop-ref">// Drop 002 — 2024</span>
+        <p>Le deuxième acte. 6reezy confirme son territoire. Les pièces parlent d'elles-mêmes — pas besoin d'explication, juste la rue.</p>
+        <p>Sold out. L'archive reste.</p>
+      </div>
+    </div>
+
+    <div class="lb-grid">
+      <div class="lb-row-d">
+        <div class="lb-cell full" onclick="openLightbox(3, '002')">
+          <div class="placeholder">6Z</div>
+          <div class="lb-cell-overlay">
+            <span class="overlay-drop">Drop 002</span>
+            <span class="overlay-title">Campaign Full</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════ DROP 001 ═══════════════ -->
+  <div class="lb-section" id="drop-001">
+
+    <div class="lb-grid">
+      <div class="lb-row-a">
+        <div class="lb-cell tall" onclick="openLightbox(0, '001')">
+          <div class="placeholder">6Z</div>
+          <div class="lb-cell-overlay">
+            <span class="overlay-drop">Drop 001</span>
+            <span class="overlay-title">Tee #001</span>
+          </div>
+        </div>
+        <div class="lb-row-a-right">
+          <div class="lb-cell short" onclick="openLightbox(1, '001')">
+            <div class="placeholder">6Z</div>
+            <div class="lb-cell-overlay">
+              <span class="overlay-drop">Drop 001</span>
+              <span class="overlay-title">Hoodie #001</span>
+            </div>
+          </div>
+          <div class="lb-cell short" onclick="openLightbox(2, '001')">
+            <div class="placeholder">6Z</div>
+            <div class="lb-cell-overlay">
+              <span class="overlay-drop">Drop 001</span>
+              <span class="overlay-title">Détail #01</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lb-editorial">
+      <div class="editorial-title">Drop<br><span>001</span><br>2025</div>
+      <div class="editorial-body">
+        <span class="drop-ref">// Drop 001 — 2025</span>
+        <p>Là où tout a commencé. Le premier drop 6reezy posait les bases de l'univers — brut, direct, sans fioritures.</p>
+        <p>Sold out en 48h. La légende commence ici.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 6reezy 2026 — Tous droits réservés</p>
+    <p>6reezy Rules The World</p>
+  </footer>
+
+  <script>
+    // Drop tabs
+    function showDrop(id, btn) {
+      document.querySelectorAll('.lb-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.drop-tab').forEach(b => b.classList.remove('active'));
+      document.getElementById('drop-' + id).classList.add('active');
+      btn.classList.add('active');
+      currentDrop = id;
+    }
+
+    // Lightbox
+    let currentIndex = 0;
+    let currentDrop = '003';
+
+    const dropCounts = { '003': 9, '002': 4, '001': 3 };
+
+    function openLightbox(index, drop) {
+      currentIndex = index;
+      currentDrop = drop;
+      updateLightbox();
+      document.getElementById('lightbox').classList.add('open');
+    }
+
+    function updateLightbox() {
+      const total = dropCounts[currentDrop];
+      document.getElementById('lb-counter').textContent =
+        (currentIndex + 1) + ' / ' + total;
+    }
+
+    function closeLightbox(e) {
+      if (!e || e.target === document.getElementById('lightbox') || e.currentTarget.classList.contains('lightbox-close')) {
+        document.getElementById('lightbox').classList.remove('open');
+      }
+    }
+
+    function lbNav(dir) {
+      const total = dropCounts[currentDrop];
+      currentIndex = (currentIndex + dir + total) % total;
+      updateLightbox();
+    }
+
+    document.addEventListener('keydown', e => {
+      if (!document.getElementById('lightbox').classList.contains('open')) return;
+      if (e.key === 'ArrowRight') lbNav(1);
+      if (e.key === 'ArrowLeft') lbNav(-1);
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+
+</body>
+</html>

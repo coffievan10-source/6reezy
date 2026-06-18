@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>6reezy — Archives</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@900&family=Share+Tech+Mono&display=swap');
+
+    :root {
+      --black: #0A0A0A;
+      --off-white: #F0EDEB;
+      --red: #C41E1E;
+      --green: #2D3B2A;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--black);
+      color: var(--red);
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 32px;
+      background: var(--black);
+    }
+
+    .nav-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 28px;
+      color: var(--off-white);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      color: var(--off-white);
+      text-decoration: none;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--red); }
+
+    /* TICKER */
+    .ticker {
+      overflow: hidden;
+      background: var(--red);
+      color: var(--black);
+      font-size: 12px;
+      padding: 6px 0;
+      margin-top: 64px;
+    }
+
+    .ticker-inner {
+      display: inline-flex;
+      animation: ticker 18s linear infinite;
+      white-space: nowrap;
+    }
+
+    .ticker-inner span { padding: 0 40px; }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* HERO */
+    .arc-hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 32px 60px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .arc-hero::before {
+      content: 'ARC';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(120px, 28vw, 380px);
+      color: transparent;
+      -webkit-text-stroke: 1px #1a1a1a;
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .arc-hero-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 16px;
+    }
+
+    .arc-hero h1 {
+      font-size: clamp(80px, 16vw, 220px);
+      text-transform: uppercase;
+      line-height: 0.88;
+      color: var(--off-white);
+    }
+
+    .arc-hero h1 span.outline {
+      color: transparent;
+      -webkit-text-stroke: 2px var(--off-white);
+    }
+
+    .arc-hero-stats {
+      display: flex;
+      gap: 60px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .stat-block { display: flex; flex-direction: column; gap: 4px; }
+
+    .stat-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 48px;
+      color: var(--off-white);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--off-white);
+      opacity: 0.4;
+    }
+
+    /* TIMELINE */
+    .timeline-section {
+      padding: 80px 32px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 60px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .section-title {
+      font-size: clamp(40px, 6vw, 80px);
+      text-transform: uppercase;
+      line-height: 0.88;
+      color: var(--off-white);
+    }
+
+    .section-sub {
+      font-size: 11px;
+      color: var(--off-white);
+      opacity: 0.3;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* Chaque drop dans la timeline */
+    .timeline-drop {
+      border-top: 1px solid #1a1a1a;
+      padding: 60px 0;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 60px;
+      position: relative;
+    }
+
+    .timeline-drop:last-child { border-bottom: 1px solid #1a1a1a; }
+
+    .timeline-year-col {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-top: 8px;
+    }
+
+    .timeline-drop-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 80px;
+      line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 1px #2a2a2a;
+    }
+
+    .timeline-drop-num.active {
+      -webkit-text-stroke: 2px var(--red);
+    }
+
+    .timeline-year {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--off-white);
+      opacity: 0.4;
+    }
+
+    .timeline-status {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border: 1px solid;
+      display: inline-block;
+      margin-top: 8px;
+      width: fit-content;
+    }
+
+    .timeline-status.live {
+      color: var(--red);
+      border-color: var(--red);
+    }
+
+    .timeline-status.sold {
+      color: #2a2a2a;
+      border-color: #1e1e1e;
+    }
+
+    .timeline-content { display: flex; flex-direction: column; gap: 32px; }
+
+    .timeline-drop-title {
+      font-size: clamp(36px, 5vw, 64px);
+      text-transform: uppercase;
+      line-height: 0.88;
+      color: var(--off-white);
+    }
+
+    .timeline-drop-title span {
+      color: transparent;
+      -webkit-text-stroke: 1px var(--off-white);
+    }
+
+    .timeline-desc {
+      font-size: 12px;
+      color: var(--off-white);
+      opacity: 0.5;
+      line-height: 1.8;
+      max-width: 480px;
+      letter-spacing: 0.03em;
+    }
+
+    /* Mini grille photos dans la timeline */
+    .timeline-photos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .timeline-photo {
+      aspect-ratio: 3/4;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 24px;
+      font-weight: 900;
+      color: #1e1e1e;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .timeline-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+
+    .timeline-photo:hover img,
+    .timeline-photo:hover span {
+      transform: scale(1.05);
+    }
+
+    .timeline-photo span {
+      display: block;
+      transition: transform 0.4s;
+    }
+
+    .timeline-photo-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      background: linear-gradient(transparent, rgba(10,10,10,0.9));
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      color: var(--off-white);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .timeline-photo:hover .timeline-photo-label { opacity: 1; }
+
+    .timeline-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .timeline-btn {
+      background: none;
+      border: 1px solid;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 10px 20px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.2s;
+    }
+
+    .timeline-btn.primary {
+      border-color: var(--off-white);
+      color: var(--off-white);
+    }
+
+    .timeline-btn.primary:hover {
+      background: var(--off-white);
+      color: var(--black);
+    }
+
+    .timeline-btn.secondary {
+      border-color: #2a2a2a;
+      color: #2a2a2a;
+      pointer-events: none;
+    }
+
+    /* STATS BANDE */
+    .stats-band {
+      background: #0f0f0f;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+      padding: 60px 32px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+
+    .stats-item {
+      padding: 24px;
+      border-right: 1px solid #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stats-item:last-child { border-right: none; }
+
+    .stats-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 56px;
+      line-height: 1;
+      color: var(--off-white);
+    }
+
+    .stats-label {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--off-white);
+      opacity: 0.3;
+    }
+
+    /* MANIFESTO */
+    .manifesto {
+      padding: 100px 32px;
+      border-bottom: 1px solid #1a1a1a;
+      max-width: 900px;
+    }
+
+    .manifesto-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 24px;
+    }
+
+    .manifesto-text {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(32px, 5vw, 64px);
+      text-transform: uppercase;
+      line-height: 1;
+      color: var(--off-white);
+    }
+
+    .manifesto-text span {
+      color: transparent;
+      -webkit-text-stroke: 1px var(--off-white);
+    }
+
+    /* NEXT DROP TEASER */
+    .next-drop {
+      padding: 100px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+
+    .next-drop-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 12px;
+    }
+
+    .next-drop-title {
+      font-size: clamp(60px, 10vw, 140px);
+      text-transform: uppercase;
+      line-height: 0.88;
+      color: var(--off-white);
+    }
+
+    .next-drop-title span {
+      color: transparent;
+      -webkit-text-stroke: 2px var(--off-white);
+    }
+
+    .next-drop-cta {
+      background: var(--red);
+      border: none;
+      color: var(--black);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 20px 48px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .next-drop-cta:hover { opacity: 0.8; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid #1a1a1a;
+      padding: 40px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    footer p {
+      font-size: 11px;
+      color: var(--off-white);
+      opacity: 0.3;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    @media (max-width: 768px) {
+      .timeline-drop {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .stats-band {
+        grid-template-columns: 1fr 1fr;
+      }
+      .stats-item { border-right: none; border-bottom: 1px solid #1a1a1a; }
+      .next-drop { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="6reezy.html" class="nav-logo">6reezy</a>
+    <ul class="nav-links">
+      <li><a href="catalogue.html">Catalogue</a></li>
+      <li><a href="Drops.html">Drops</a></li>
+    </ul>
+  </nav>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-inner">
+      <span>6reezy RULES THE WORLD • DROP 003 +</span>
+      <span>6reezy RULES THE WORLD • DROP 003 +</span>
+      <span>6reezy RULES THE WORLD • DROP 003 +</span>
+      <span>6reezy RULES THE WORLD • DROP 003 +</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="arc-hero">
+    <div class="arc-hero-label">// Mémoire du mouvement</div>
+    <h1>Archi<br><span class="outline">ves</span></h1>
+    <div class="arc-hero-stats">
+      <div class="stat-block">
+        <span class="stat-num">003</span>
+        <span class="stat-label">Drops</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-num">08</span>
+        <span class="stat-label">Pièces totales</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-num">2024</span>
+        <span class="stat-label">Depuis</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS BANDE -->
+  <div class="stats-band">
+    <div class="stats-item">
+      <span class="stats-num">003</span>
+      <span class="stats-label">Drops lancés</span>
+    </div>
+    <div class="stats-item">
+      <span class="stats-num">08</span>
+      <span class="stats-label">Références</span>
+    </div>
+    <div class="stats-item">
+      <span class="stats-num">48h</span>
+      <span class="stats-label">Record sell-out</span>
+    </div>
+    <div class="stats-item">
+      <span class="stats-num">∞</span>
+      <span class="stats-label">À venir</span>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="timeline-section">
+    <div class="section-header">
+      <h2 class="section-title">Timeline<br><span style="color:transparent;-webkit-text-stroke:2px var(--off-white)">Drops</span></h2>
+      <span class="section-sub">2024 — présent</span>
+    </div>
+
+    <!-- DROP 003 -->
+    <div class="timeline-drop">
+      <div class="timeline-year-col">
+        <div class="timeline-drop-num active">003</div>
+        <span class="timeline-year">2025</span>
+        <span class="timeline-status live">En ligne</span>
+      </div>
+      <div class="timeline-content">
+        <div>
+          <div class="timeline-drop-title">Drop <span>003</span></div>
+          <p class="timeline-desc">Le troisième chapitre. Trois pièces — Tee, Hoodie, Cap. La vision 6reezy s'affûte. Zéro compromis, maximum d'impact. Encore disponible.</p>
+        </div>
+        <div class="timeline-photos">
+          <div class="timeline-photo">
+            <span>6Z</span>
+            <div class="timeline-photo-label">Tee #003</div>
+          </div>
+          <div class="timeline-photo">
+            <span>6Z</span>
+            <div class="timeline-photo-label">Hoodie #003</div>
+          </div>
+          <div class="timeline-photo">
+            <span>6Z</span>
+            <div class="timeline-photo-label">Cap #003</div>
+          </div>
+        </div>
+        <div class="timeline-actions">
+          <a class="timeline-btn primary" href="Drops.html">Voir le drop →</a>
+          <a class="timeline-btn primary" href="lookbook.html">Lookbook</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- DROP 002 -->
+    <div class="timeline-drop">
+      <div class="timeline-year-col">
+        <div class="timeline-drop-num">002</div>
+        <span class="timeline-year">2024</span>
+        <span class="timeline-status sold">Sold Out</span>
+      </div>
+      <div class="timeline-content">
+        <div>
+          <div class="timeline-drop-title">Drop <span>002</span></div>
+          <p class="timeline-desc">Le second acte. 6reezy confirme son territoire avec deux silhouettes incontournables — le Tee #002 et le Longsleeve #002. Sold out en quelques heures.</p>
+        </div>
+        <div class="timeline-photos">
+          <div class="timeline-photo">
+            <span>6Z</span>
+            <div class="timeline-photo-label">Tee #002</div>
+          </div>
+          <div class="timeline-photo">
+            <span>6Z</span>
+            <div class="timeline-photo-label">Longsleeve #002</div>
+          </div>
+          <div class="timeline-photo">
+            <span>6Z</span>
+            <div class="timeline-photo-label">Campaign</div>
+          </div>
+        </div>
+        <div class="timeline-actions">
+          <a class="timeline-btn secondary" href="#">Sold Out</a>
+          <a class="timeline-btn primary" href="lookbook.html">Lookbook</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- DROP 001 -->
+    <div class="timeline-drop">
+      <div class="timeline-year-col">
+        <div class="timeline-drop-num">001</div>
+        <span class="timeline-year">2024</span>
+        <span class="timeline-status sold">Sold Out</span>
+      </div>
+      <div class="timeline-content">
+        <div>
+          <div class="timeline-drop-title">Drop <span>001</span></div>
+          <p class="timeline-desc">L'origine. Là où tout a commencé. Le 6REEZY ORIGINet le Hoodie #001 posaient les fondations de l'esthétique 6reezy. Brut, direct, authentique. Sold out en 48h.</p>
+        </div>
+        <div class="timeline-photos">
+          <div class="timeline-photo">
+            <span>6Z</span>
+            <div class="timeline-photo-label">Tee #001</div>
+          </div>
+          <div class="timeline-photo">
+            <span>6Z</span>
+            <div class="timeline-photo-label">Hoodie #001</div>
+          </div>
+          <div class="timeline-photo">
+            <span>6Z</span>
+            <div class="timeline-photo-label">Campaign</div>
+          </div>
+        </div>
+        <div class="timeline-actions">
+          <a class="timeline-btn secondary" href="#">Sold Out</a>
+          <a class="timeline-btn primary" href="lookbook.html">Lookbook</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MANIFESTO -->
+  <div class="manifesto">
+    <div class="manifesto-label">// Ce qu'on construit</div>
+    <div class="manifesto-text">
+      Chaque drop<br>
+      est un <span>document.</span><br>
+      L'archive<br>
+      est la <span>preuve.</span>
+    </div>
+  </div>
+
+  <!-- NEXT DROP TEASER -->
+  <div class="next-drop">
+    <div>
+      <div class="next-drop-label">// Prochainement</div>
+      <div class="next-drop-title">Drop<br><span>004</span></div>
+    </div>
+    <a class="next-drop-cta" href="Drops.html">Voir les drops →</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 6reezy 2025 — Tous droits réservés</p>
+    <p>6reezy Rules The World</p>
+  </footer>
+
+</body>
+</html>
