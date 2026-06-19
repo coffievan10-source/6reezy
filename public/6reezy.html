@@ -94,15 +94,23 @@
   }
 
   /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 0 24px 60px;
-    position: relative;
-    overflow: hidden;
-  }
+.hero{
+position: relative;
+}
+
+.hero-image{
+width: 100%;
+display: block;
+}
+
+.hero-content{
+position: absolute;
+bottom: 30px;
+left: 60px;
+z-index:10;
+color: white;
+text-align: bottom left;
+}
 
   .hero-bg {
     position: absolute;
@@ -686,17 +694,13 @@
 
 <!-- HERO -->
 <section class="hero">
-  <a href="6reezy.html" class="nav-hero-background">
+ <a href="6reezy.html" class="hero-image">
      <img src="photo shooting2.jpg" height="5%" width="100%" alt="">
     </a>
-  <div class="hero-bg"></div>
-
-  <div class="hero-badge">RULES BABI.</div>
-
-  <p class="hero-eyebrow">// DROP 003</p>
-  <div class="hero-titleprecis">
-    6reezy
-  </div>
+  <div class="hero-content">
+      <div class="hero-badge">RULES BABI.</div>
+      <p class="hero-eyebrow">// DROP 003</p>
+      <div class="hero-title">6REEZY</div>
 <h1 class="hero-title">
     <span class="line-2">RUNS</span>
     <span class="line-3">BABI.</span>
